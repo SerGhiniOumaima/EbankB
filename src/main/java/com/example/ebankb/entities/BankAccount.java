@@ -16,7 +16,7 @@ import java.util.List;
 //@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 //création de 3 tables
 //@Inheritance(strategy = InheritanceType.JOINED)
-
+//ji
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 //annotation pour ajouter dans la table compte la colonne type avec un max 4 caractères
 @DiscriminatorColumn(name = "TYPE" , length = 4, discriminatorType = DiscriminatorType.STRING)
