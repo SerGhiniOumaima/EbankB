@@ -3,9 +3,11 @@ package com.example.ebankb;
 import com.example.ebankb.entities.*;
 import com.example.ebankb.enums.AccountStatus;
 import com.example.ebankb.enums.OperationType;
+import com.example.ebankb.exceptions.CustomerNotFoundException;
 import com.example.ebankb.repositories.AccountOperationRepository;
 import com.example.ebankb.repositories.BankAccountRepository;
 import com.example.ebankb.repositories.CustomerRepository;
+import com.example.ebankb.services.BankAccountService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -22,11 +24,29 @@ public class EbankBApplication {
         SpringApplication.run(EbankBApplication.class, args);
     }
     @Bean
-    CommandLineRunner start(
-            CustomerRepository customerRepository,
-            BankAccountRepository bankAccountRepository,
-            AccountOperationRepository accountOperationRepository)
+    CommandLineRunner start(BankAccountService  bankAccountService)
+    {
+        return args -> {
+            Stream.of("Ali", "Amal", "Soukaina").forEach(name -> {
+                Customer cus = new Customer();
+                cus.setName(name);
+                cus.setEmail(name + "@gmail.com");
+                bankAccountService.saveCustomer(cus);
+            });
+            bankAccountService.listCustomers().forEach(customer ->
+            {
+                try {
+                    bankAccountService.saveCurrentBankAccount(Math.random()*90000,7000,customer.getId());
+                    bankAccountService.saveCurrentBankAccount(Math.random()*120000,5.5, customer.getId());
+                } catch (CustomerNotFoundException e) {
+                    e.printStackTrace();
+                }
+            });
 
+        };
+
+    }
+/*
     {
         return args -> {
             Stream.of("Hassan","Leila","Aicha").forEach(name->{
@@ -78,4 +98,6 @@ public class EbankBApplication {
             });
         };
     }
+
+ */
 }

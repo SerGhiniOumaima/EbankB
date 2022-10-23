@@ -7,17 +7,22 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
+
+/**
+ * The type Account operation.
+ */
 @Entity
 @Data @NoArgsConstructor @AllArgsConstructor
 public class AccountOperation {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Date operationDate;
-    private Double Amount;
+    private Double amount;
     @Enumerated(EnumType.STRING)
     private OperationType type;
     @ManyToOne
     private BankAccount bankAccount;
+    private String description;
 
 
 }
