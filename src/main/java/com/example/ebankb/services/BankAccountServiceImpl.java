@@ -13,7 +13,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.security.auth.login.AccountNotFoundException;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -134,5 +133,10 @@ public class BankAccountServiceImpl implements BankAccountService{
         debit(accountIdSource,amount,"transfer");
         credit(accountIdDestination,amount,"transfer");
 
+    }
+    @Override
+    public List<BankAccount> bankAccountList(){
+        List<BankAccount> bankAccounts=bankAccountRepository.findAll();
+        return bankAccounts;
     }
 }

@@ -3,6 +3,8 @@ package com.example.ebankb;
 import com.example.ebankb.entities.*;
 import com.example.ebankb.enums.AccountStatus;
 import com.example.ebankb.enums.OperationType;
+import com.example.ebankb.exceptions.BalanceNotSufficentException;
+import com.example.ebankb.exceptions.BankAccountNotFoundException;
 import com.example.ebankb.exceptions.CustomerNotFoundException;
 import com.example.ebankb.repositories.AccountOperationRepository;
 import com.example.ebankb.repositories.BankAccountRepository;
@@ -14,6 +16,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 import java.util.stream.Stream;
 
@@ -37,16 +40,30 @@ public class EbankBApplication {
             {
                 try {
                     bankAccountService.saveCurrentBankAccount(Math.random()*90000,7000,customer.getId());
-                    bankAccountService.saveCurrentBankAccount(Math.random()*120000,5.5, customer.getId());
+                    bankAccountService.saveSavingBankAccount(Math.random()*120000,5.5, customer.getId());
+                    List<BankAccount> bankAccounts=bankAccountService.bankAccountList();
+                    for(BankAccount bankAccount:bankAccounts)
+                    {
+                        for(int i=0;i<10;i++)
+                        {
+                            bankAccountService.credit(bankAccount.getId(),12000*Math.random()+10000,"credit");
+                            bankAccountService.debit(bankAccount.getId(),12000*Math.random()+10000,"debit");
+                        }
+                    }
+
                 } catch (CustomerNotFoundException e) {
                     e.printStackTrace();
+                } catch (BankAccountNotFoundException  | BalanceNotSufficentException e) {
+                    e.printStackTrace();
                 }
+
             });
 
         };
 
     }
 /*
+première partie du test
     {
         return args -> {
             Stream.of("Hassan","Leila","Aicha").forEach(name->{
