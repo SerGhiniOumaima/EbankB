@@ -1,5 +1,6 @@
 package com.example.ebankb;
 
+import com.example.ebankb.dtos.CustomerDTO;
 import com.example.ebankb.entities.*;
 import com.example.ebankb.enums.AccountStatus;
 import com.example.ebankb.enums.OperationType;
@@ -31,7 +32,7 @@ public class EbankBApplication {
     {
         return args -> {
             Stream.of("Ali", "Amal", "Soukaina").forEach(name -> {
-                Customer cus = new Customer();
+                CustomerDTO cus = new CustomerDTO();
                 cus.setName(name);
                 cus.setEmail(name + "@gmail.com");
                 bankAccountService.saveCustomer(cus);

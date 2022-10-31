@@ -15,5 +15,6 @@ import java.util.List;
 public class CustomerDTO {
     private Long id;
     private String name;
+    //si je veux retourner un attribut je le mets en comment
     private String email;
 }

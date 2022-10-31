@@ -1,5 +1,6 @@
 package com.example.ebankb.services;
 
+import com.example.ebankb.dtos.CustomerDTO;
 import com.example.ebankb.entities.BankAccount;
 import com.example.ebankb.entities.CurrentAccount;
 import com.example.ebankb.entities.Customer;
@@ -13,12 +14,12 @@ import java.util.List;
 public interface BankAccountService
 {
     //traitement sur les comptes
-    Customer saveCustomer(Customer customer);
+    CustomerDTO saveCustomer(CustomerDTO customerDTO);
     //création d'un compte
     CurrentAccount saveCurrentBankAccount(double initialBalance, double overDraft, Long customerId) throws CustomerNotFoundException;
     SavingAccount saveSavingBankAccount(double initialBalance, double interestedRate, Long customerId) throws CustomerNotFoundException;
     //liste des clients
-    List<Customer> listCustomers();
+    List<CustomerDTO> listCustomers();
     //consulter un compte
     BankAccount getBankAccount(String accountId) throws BankAccountNotFoundException;
     void debit(String accountId,double amount,String description) throws BankAccountNotFoundException, BalanceNotSufficentException;
@@ -27,4 +28,6 @@ public interface BankAccountService
 
 
     List<BankAccount> bankAccountList();
+
+    CustomerDTO getCustomer(Long customerId) throws CustomerNotFoundException;
 }
