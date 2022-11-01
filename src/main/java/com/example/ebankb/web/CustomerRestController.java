@@ -33,4 +33,19 @@ public class CustomerRestController {
     {
           return bankAccountService.saveCustomer(customerDTO);
     }
+    //modifier un client
+    @PutMapping("/customers/{customerId}")
+    //on a pas utilisé name de @PathVariable car l'id de l url et le param ont le même nom
+    public CustomerDTO updateCustomer(@PathVariable Long customerId,@RequestBody CustomerDTO customerDTO)
+    {
+        customerDTO.setId(customerId);
+        return bankAccountService.updateCustomer(customerDTO);
+    }
+    //supprimer un client
+    @DeleteMapping("/customers/{customerId}")
+    public void deleteCustomer(@PathVariable Long customerId)
+    {
+        bankAccountService.deleteCustomer( customerId);
+    }
+
 }
